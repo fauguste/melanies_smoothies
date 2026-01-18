@@ -17,13 +17,15 @@ cnx = st.connection("snowflake")
 session = cnx.session()
 
 my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'), col('SEARCH_ON'))
-pd_df = my_dataframe.to_pandas()
+rows = my_dataframe.collect()
 
+# Extraire les noms de fruits
+fruit_names = [row['FRUIT_NAME'] for row in rows]
 
 
 ingredients_list = st.multiselect(
     "Choose up 5 ingrediants : ",
-    pd_df['FRUIT_NAME'].tolist(),  # Convertir en liste Python
+    fruit_names,  # Convertir en liste Python
     max_selections=5
 )
 
