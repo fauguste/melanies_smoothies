@@ -18,7 +18,9 @@ session = cnx.session()
 session.sql("USE WAREHOUSE COMPUTE_WH").collect()  # Remplace COMPUTE_WH par ton warehouse
 
 my_dataframe = session.table("smoothies.public.fruit_options").select(
-    col('FRUIT_NAME')
+    col('FRUIT_NAME'),
+      col('SEARCH_ON')
+
 )
 pd_df = my_dataframe.to_pandas()
 st.dataframe(pd_df)
